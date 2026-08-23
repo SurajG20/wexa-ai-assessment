@@ -254,6 +254,23 @@ async function main() {
     console.log(`  · ${String(key).padEnd(18)} ${rows[key].length} rows`);
   }
 
+  // Maintenance pass: cache per-part source counts so risk queries can filter
+  // single-sourced parts without aggregating SUPPLIED_BY edges at read time.
+  {
+    const session = driver.session({ defaultAccessMode: "WRITE" });
+    try {
+      await session.executeWrite((tx) =>
+        tx.run(`MATCH (c:Component)
+                OPTIONAL MATCH (c)-[s:SUPPLIED_BY]->()
+                WITH c, count(s) AS n
+                SET c.sourceCount = n`),
+      );
+    } finally {
+      await session.close();
+    }
+  }
+  console.log("  · sourceCount      backfilled");
+
   const session = driver.session({ defaultAccessMode: "READ" });
   try {
     const res = await session.executeRead((tx) =>

@@ -24,7 +24,7 @@
 export const IMPACT_BY_FACILITY = `
 MATCH (f:Facility {id: $facilityId})-[:LOCATED_IN]->(region:Region)
 MATCH (f)<-[:OPERATES]-(supplier:Supplier)
-MATCH (supplier)-[sup:SUPPLIED_BY]->(part)
+MATCH (supplier)<-[sup:SUPPLIED_BY]-(part)
 MATCH (product:Product)-[:HAS_MODULE|CONTAINS*1..]->(part)
 WITH DISTINCT product, supplier, sup, part, region
 WITH product, region,
@@ -58,7 +58,7 @@ MATCH (f:Facility {id: $facilityId})-[:LOCATED_IN]->(impacted:Region)
 MATCH (f)<-[:OPERATES]-(:Supplier)<-[sup:SUPPLIED_BY]-(part:Component)
 WHERE sup.share_pct >= 20
 MATCH (part)-[:ALT_SOURCE]->(alt:Component)-[altSup:SUPPLIED_BY]->(altSupplier:Supplier)
-WITH part, sup, impacted,
+WITH part, sup, impacted, alt, altSupplier,
      [(altSupplier)-[:OPERATES]->(:Facility)-[:LOCATED_IN]->(ar:Region) | ar.iso] AS altRegions
 WHERE ALL(iso IN altRegions WHERE iso <> impacted.iso)
 RETURN part.mpn AS mpn,

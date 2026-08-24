@@ -18,22 +18,23 @@ const BATCH_SIZE = 400;
 
 /** Map facility cities to regions (kept explicit — no fuzzy geography). */
 const CITY_REGION: Record<string, string> = {
-  Tainan: "TW", Taichung: "TW", Hsinchu: "TW", Miaoli: "TW", Kaohsiung: "TW", "New Taipei": "TW",
+  Tainan: "TW", "Tainan Science Park": "TW", Taichung: "TW", Hsinchu: "TW", Miaoli: "TW", Kaohsiung: "TW", "New Taipei": "TW",
   Taipei: "TW", Taoyuan: "TW", Guishan: "TW", Phoenix: "US", Taylor: "US", Boise: "US", Chandler: "US",
   Hillsboro: "US", Malta: "US", Dallas: "US", Lehi: "US", Austin: "US", "Newbury Park": "US",
   Greensboro: "US", Richardson: "US", "San Diego": "US", "Fort Collins": "US", "Santa Clara": "US",
+  "Newport Beach": "US", Wilmington: "US",
   Houston: "US", "St. Petersburg": "US", Lisle: "US", Hwaseong: "KR", Pyeongtaek: "KR", Icheon: "KR",
   Cheongju: "KR", Ochang: "KR", Asan: "KR", Cheonan: "KR", Paju: "KR", Busan: "KR", Gumi: "KR",
   Wuxi: "CN", Shanghai: "CN", Beijing: "CN", Shenzhen: "CN", Guangzhou: "CN", Chengdu: "CN",
   Heyuan: "CN", Tianjin: "CN", Ningde: "CN", Dongguan: "CN", Nanjing: "CN", Zhuhai: "CN",
   Kunshan: "CN", Jiangyin: "CN", Yantai: "CN", Changzhou: "CN", Weifang: "CN", Suzhou: "CN",
-  Dalian: "CN", Huangshi: "CN", Hiroshima: "JP", Hitachinaka: "JP", Kofu: "JP", Fukui: "JP",
+  Dalian: "CN", Huangshi: "CN", Zhengzhou: "CN", Hiroshima: "JP", Hitachinaka: "JP", Kofu: "JP", Fukui: "JP",
   Narita: "JP", Kagoshima: "JP", Kirishima: "JP", Yokohama: "JP", Gifu: "JP", Onomichi: "JP",
-  Osaka: "JP", Isahaya: "JP", Kaminoyama: "JP", Singapore: "SG", Woodlands: "SG", Dresden: "DE",
-  Villach: "AT", Kulim: "MY", Melaka: "MY", Penang: "MY", BayanLepas: "MY", Manila: "PH",
-  Laguna: "PH", Eindhoven: "NL", "Migdal HaEmek": "IL", Mexicali: "MX", Pardubice: "CZ",
-  Wroclaw: "PL", Leixlip: "IE", Chennai: "IN", Hanoi: "VN", "Bac Ninh": "VN", Newport: "GB",
-  Bordeaux: "FR", Arnstadt: "DE", Erlangen: "DE", "Queen Creek": "US", "De Soto": "US",
+  Osaka: "JP", Tokyo: "JP", Isahaya: "JP", Kaminoyama: "JP", Singapore: "SG", Woodlands: "SG", "Pasir Ris": "SG", Dresden: "DE",
+  Villach: "AT", Kulim: "MY", Melaka: "MY", Penang: "MY", "Bayan Lepas": "MY", Manila: "PH",
+  Laguna: "PH", Calamba: "PH", Eindhoven: "NL", "Migdal HaEmek": "IL", Mexicali: "MX", Pardubice: "CZ",
+  Wroclaw: "PL", Leixlip: "IE", Limerick: "IE", Chennai: "IN", Hanoi: "VN", "Bac Ninh": "VN", Newport: "GB",
+  Bordeaux: "FR", Crolles: "FR", Arnstadt: "DE", Erlangen: "DE", Reutlingen: "DE", Catania: "IT", "Queen Creek": "US", "De Soto": "US",
 };
 
 function regionFor(city: string): string {
